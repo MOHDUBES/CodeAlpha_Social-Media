@@ -1,5 +1,7 @@
 # 📱 Loopline: Production-Quality Mini Social Media Platform
 
+🌐 **Live Demo:** [https://code-alpha-social-media-phi.vercel.app/](https://code-alpha-social-media-phi.vercel.app/)
+
 Loopline is a fully functional, end-to-end full-stack social media application. It provides a premium, dark-mode design system with secure authentication, real-time interactions, and comprehensive profile management.
 
 ## 🚀 Key Features & Innovations
