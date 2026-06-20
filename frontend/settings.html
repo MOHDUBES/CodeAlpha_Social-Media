@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings and activity - Loopline</title>
+  <link rel="icon" href="/favicon_v2.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="page-enter">
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <div class="app-container">
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-wrapper">
+        
+        <div class="settings-header" onclick="window.history.back()">
+          <i class="fas fa-arrow-left"></i>
+          Settings and activity
+        </div>
+
+        <div class="settings-search">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search" oninput="showToast('Search coming soon', 'info')">
+        </div>
+
+        <!-- Meta (Loopline) Account Center -->
+        <div class="settings-group">
+          <div class="settings-item" onclick="showToast('Accounts Center coming soon', 'info')">
+            <div class="settings-item-left">
+              <i class="fas fa-user-circle"></i>
+              <div>
+                <div style="font-weight: 600;">Accounts Center</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Password, security, personal details, ad preferences</div>
+              </div>
+            </div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+        </div>
+
+        <!-- How you use Instagram (Loopline) -->
+        <div class="settings-group">
+          <div class="settings-group-title">How you use Loopline</div>
+          
+          <div class="settings-item" onclick="showToast('Saved posts coming soon', 'info')">
+            <div class="settings-item-left"><i class="far fa-bookmark"></i> <span>Saved</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+          
+          <div class="settings-item" onclick="showToast('Archive coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-history"></i> <span>Archive</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Activity coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-chart-line"></i> <span>Your activity</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="window.location.href='/notifications.html'">
+            <div class="settings-item-left"><i class="far fa-bell"></i> <span>Notifications</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Time management coming soon', 'info')">
+            <div class="settings-item-left"><i class="far fa-clock"></i> <span>Time management</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+        </div>
+
+        <!-- Who can see your content -->
+        <div class="settings-group">
+          <div class="settings-group-title">Who can see your content</div>
+          
+          <div class="settings-item" onclick="showToast('Privacy options coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-lock"></i> <span>Account privacy</span></div>
+            <div class="settings-item-right">Private <i class="fas fa-chevron-right" style="margin-left: 8px;"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Close Friends coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-star"></i> <span>Close Friends</span></div>
+            <div class="settings-item-right">0 <i class="fas fa-chevron-right" style="margin-left: 8px;"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Crossposting coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-plus-square"></i> <span>Crossposting</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Blocked users coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-ban"></i> <span>Blocked</span></div>
+            <div class="settings-item-right">0 <i class="fas fa-chevron-right" style="margin-left: 8px;"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Story settings coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-eye-slash"></i> <span>Story and location</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+        </div>
+
+        <!-- How others can interact with you -->
+        <div class="settings-group">
+          <div class="settings-group-title">How others can interact with you</div>
+          
+          <div class="settings-item" onclick="showToast('Messages settings coming soon', 'info')">
+            <div class="settings-item-left"><i class="far fa-comment-dots"></i> <span>Messages and story replies</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Tags coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-at"></i> <span>Tags and mentions</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Comments settings coming soon', 'info')">
+            <div class="settings-item-left"><i class="far fa-comment"></i> <span>Comments</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Sharing settings coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-share"></i> <span>Sharing</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Restricted coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-user-slash"></i> <span>Restricted</span></div>
+            <div class="settings-item-right">0 <i class="fas fa-chevron-right" style="margin-left: 8px;"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Limit interactions coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-exclamation-circle"></i> <span>Limit interactions</span></div>
+            <div class="settings-item-right">Off <i class="fas fa-chevron-right" style="margin-left: 8px;"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Hidden words coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-font"></i> <span>Hidden Words</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Follow and invite coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-user-plus"></i> <span>Follow and invite friends</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+        </div>
+
+        <!-- What you see -->
+        <div class="settings-group">
+          <div class="settings-group-title">What you see</div>
+          
+          <div class="settings-item" onclick="showToast('Favorites coming soon', 'info')">
+            <div class="settings-item-left"><i class="far fa-star"></i> <span>Favorites</span></div>
+            <div class="settings-item-right">0 <i class="fas fa-chevron-right" style="margin-left: 8px;"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Muted accounts coming soon', 'info')">
+            <div class="settings-item-left"><i class="far fa-bell-slash"></i> <span>Muted accounts</span></div>
+            <div class="settings-item-right">0 <i class="fas fa-chevron-right" style="margin-left: 8px;"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Content preferences coming soon', 'info')">
+            <div class="settings-item-left"><i class="far fa-images"></i> <span>Content preferences</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Like counts coming soon', 'info')">
+            <div class="settings-item-left"><i class="far fa-heart"></i> <span>Like and share counts</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+        </div>
+
+        <!-- Your app and media -->
+        <div class="settings-group">
+          <div class="settings-group-title">Your app and media</div>
+          
+          <div class="settings-item" onclick="showToast('Device permissions coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-mobile-alt"></i> <span>Device permissions</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Archiving coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-download"></i> <span>Archiving and downloading</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Accessibility coming soon', 'info')">
+            <div class="settings-item-left"><i class="fab fa-accessible-icon"></i> <span>Accessibility</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Language coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-language"></i> <span>Language and translations</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="toggleTheme()">
+            <div class="settings-item-left"><i class="fas fa-moon"></i> <span>App Theme</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Data usage coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-signal"></i> <span>Data usage and media quality</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+        </div>
+
+        <!-- Family Center -->
+        <div class="settings-group">
+          <div class="settings-group-title">Family Center</div>
+          
+          <div class="settings-item" onclick="showToast('Supervision coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-users"></i> <span>Supervision for Teen Accounts</span></div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+        </div>
+
+        <!-- Subscriptions -->
+        <div class="settings-group">
+          <div class="settings-group-title">Subscriptions</div>
+          
+          <div class="settings-item" onclick="showToast('Loopline Plus coming soon', 'info')">
+            <div class="settings-item-left"><i class="far fa-gem"></i> <span>Loopline Plus</span></div>
+            <div class="settings-item-right">Not subscribed <i class="fas fa-chevron-right" style="margin-left: 8px;"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Verified coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-check-circle"></i> <span>Loopline Verified</span></div>
+            <div class="settings-item-right">Not subscribed <i class="fas fa-chevron-right" style="margin-left: 8px;"></i></div>
+          </div>
+        </div>
+
+        <!-- Also from Loopline -->
+        <div class="settings-group">
+          <div class="settings-group-title">Also from Loopline</div>
+          
+          <div class="settings-item" onclick="showToast('AI Chat coming soon', 'info')">
+            <div class="settings-item-left">
+              <i class="fas fa-robot"></i> 
+              <div>
+                <div style="font-weight: 600;">Loopline AI</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Get answers, advice and generate images</div>
+              </div>
+            </div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+
+          <div class="settings-item" onclick="showToast('Threads coming soon', 'info')">
+            <div class="settings-item-left">
+              <i class="fas fa-comment-alt"></i> 
+              <div>
+                <div style="font-weight: 600;">Threads</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Share ideas and join conversations</div>
+              </div>
+            </div>
+            <div class="settings-item-right"><i class="fas fa-chevron-right"></i></div>
+          </div>
+        </div>
+
+        <!-- Login / Logout -->
+        <div class="settings-group">
+          <div class="settings-group-title">Login</div>
+          
+          <div class="settings-item primary-text" onclick="showToast('Add account coming soon', 'info')">
+            <div class="settings-item-left"><i class="fas fa-plus"></i> <span style="font-weight: 600;">Add account</span></div>
+          </div>
+
+          <div class="settings-item danger-text" id="logoutBtn" onclick="logout()">
+            <div class="settings-item-left"><i class="fas fa-sign-out-alt"></i> <span style="font-weight: 600;">Log out</span></div>
+          </div>
+        </div>
+
+        <div style="text-align: center; color: var(--text-muted); font-size: 12px; padding: 20px 0 40px 0;">
+          Loopline by Antigravity IDE
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>

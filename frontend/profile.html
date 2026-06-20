@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - Loopline</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .profile-header {
+      padding: var(--space-4);
+      background: var(--bg-base);
+    }
+    
+    .profile-top-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: var(--space-3);
+    }
+    
+    .profile-avatar-container {
+      position: relative;
+      margin-right: var(--space-5);
+    }
+    
+    .profile-avatar {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--bg-hover);
+    }
+    
+    .avatar-upload-btn {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 24px;
+      height: 24px;
+      background: #0095f6; /* Instagram blue */
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--bg-base);
+      cursor: pointer;
+      font-size: 12px;
+    }
+    
+    /* Ready for bubble */
+    .ready-for-bubble {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 10px;
+      padding: 4px 8px;
+      border-radius: 12px;
+      white-space: nowrap;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    
+    .profile-stats-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .profile-name-top {
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    
+    .profile-stats {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+    
+    .stat-value {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text-primary);
+    }
+    
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-primary);
+    }
+    
+    .profile-bio-area {
+      font-size: 14px;
+      line-height: 1.4;
+      margin-bottom: var(--space-3);
+    }
+    
+    .profile-link {
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 500;
+      margin-top: 4px;
+    }
+    
+    .add-banners-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg-surface);
+      padding: 4px 10px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 8px;
+      border: 1px solid var(--border-subtle);
+    }
+    
+    .profile-actions-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: var(--space-4);
+    }
+    
+    .profile-action-btn {
+      flex: 1;
+      background: var(--bg-surface);
+      border: none;
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 14px;
+      padding: 8px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .profile-action-btn.primary {
+      background: #0095f6;
+      color: white;
+    }
+    
+    .icon-btn-small {
+      width: 36px;
+      flex: 0 0 36px;
+      background: var(--bg-surface);
+      border: none;
+      color: var(--text-primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    
+    .discover-people-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-3);
+    }
+    
+    .discover-people-header h3 {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .see-all-btn {
+      color: #0095f6;
+      font-weight: 600;
+      font-size: 14px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .discover-list {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: var(--space-4);
+      scrollbar-width: none;
+    }
+    .discover-list::-webkit-scrollbar { display: none; }
+    
+    .discover-card {
+      min-width: 140px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: var(--space-3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    
+    .discover-card-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      cursor: pointer;
+    }
+    
+    .discover-card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 8px;
+      object-fit: cover;
+    }
+    
+    .discover-card-name {
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 12px;
+      text-align: center;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .discover-follow-btn {
+      width: 100%;
+      background: #0095f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 0;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    
+    .profile-tabs {
+      display: flex;
+      border-top: 1px solid var(--border-subtle);
+    }
+    
+    .profile-tab {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px 0;
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-size: 22px;
+    }
+    
+    .profile-tab.active {
+      color: var(--text-primary);
+      border-bottom: 2px solid var(--text-primary);
+    }
+    
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    
+    .grid-item {
+      aspect-ratio: 1 / 1;
+      background: var(--bg-hover);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .grid-item img, .grid-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-4);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+      color: white;
+      font-weight: 600;
+    }
+    .grid-item:hover .grid-overlay {
+      opacity: 1;
+    }
+    
+    /* Desktop Layout for Profile Header */
+    @media (min-width: 768px) {
+      .profile-header {
+        max-width: 900px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        grid-template-rows: auto auto auto auto auto;
+        grid-template-areas: 
+          "avatar name"
+          "avatar stats"
+          "avatar bio"
+          "avatar actions"
+          "discover-header discover-header"
+          "discover-list discover-list";
+        column-gap: 30px;
+        padding: 40px;
+      }
+      .profile-top-row {
+        display: contents;
+      }
+      .profile-avatar-container {
+        grid-area: avatar;
+        margin-right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+      .profile-avatar {
+        width: 150px;
+        height: 150px;
+      }
+      .ready-for-bubble {
+        top: -15px;
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+      .avatar-upload-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+        bottom: 10px;
+        right: 45px;
+      }
+      .profile-stats-container {
+        display: contents;
+      }
+      .profile-name-top {
+        grid-area: name;
+        font-size: 20px;
+        margin-bottom: 20px;
+        align-self: center;
+      }
+      .profile-stats {
+        grid-area: stats;
+        justify-content: flex-start;
+        gap: 40px;
+        margin-bottom: 20px;
+      }
+      .stat-item {
+        flex-direction: row;
+        gap: 8px;
+      }
+      .stat-label {
+        font-size: 16px;
+      }
+      .profile-bio-area {
+        grid-area: bio;
+        margin-bottom: 20px;
+      }
+      .profile-actions-row {
+        grid-area: actions;
+        justify-content: flex-start;
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+      .profile-action-btn {
+        flex: 0 0 auto;
+        padding: 8px 24px;
+      }
+      .discover-people-header {
+        grid-area: discover-header;
+      }
+      .discover-list {
+        grid-area: discover-list;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .profile-grid {
+        gap: 2px;
+      }
+      .grid-item {
+        border-radius: 0;
+      }
+    }
+  </style>
+<link rel="icon" href="/favicon_v2.svg" type="image/svg+xml">
+</head>
+<body class="page-enter">
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <main class="main-content">
+      <div class="content-wrapper" style="padding-top: 0;">
+        
+        <div class="card" style="padding: 0; overflow: hidden; margin-bottom: var(--space-6); background: transparent; box-shadow: none; border: none;">
+          <div class="profile-header stagger-1">
+            
+            <div class="profile-top-row">
+              <div class="profile-avatar-container">
+                <div class="ready-for-bubble">Ready for...</div>
+                <img id="profileAvatar" src="" class="profile-avatar" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=fallback'">
+                <div class="avatar-upload-btn" id="avatarUploadBtn" onclick="document.getElementById('avatarInput').click()"><i class="fas fa-plus"></i></div>
+                <input type="file" id="avatarInput" style="display:none" accept="image/*" onchange="uploadImage('avatar')">
+              </div>
+              
+              <div class="profile-stats-container">
+                <div class="profile-name-top" id="fName"></div>
+                <div class="profile-stats">
+                  <div class="stat-item">
+                    <span class="stat-value" id="postsCount">0</span>
+                    <span class="stat-label">posts</span>
+                  </div>
+                  <div class="stat-item" onclick="openFollowers()">
+                    <span class="stat-value" id="followersCount">0</span>
+                    <span class="stat-label">followers</span>
+                  </div>
+                  <div class="stat-item" onclick="openFollowing()">
+                    <span class="stat-value" id="followingCount">0</span>
+                    <span class="stat-label">following</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="profile-bio-area">
+              <div id="profileBio" style="white-space: pre-wrap; font-weight: 500;"></div>
+              <a href="#" class="profile-link"><i class="fas fa-link" style="transform: rotate(45deg); font-size: 12px;"></i> loopline.com/channel...</a>
+              <div class="add-banners-badge"><i class="fas fa-plus" style="font-size: 10px;"></i> Add banners</div>
+            </div>
+            
+            <div class="profile-actions-row" id="profileActionBtnContainer">
+              <!-- Dynamically populated, but default is Edit Profile -->
+              <button id="editProfileBtn" class="profile-action-btn" style="display: none;" onclick="openEditModal()">Edit profile</button>
+              <button id="shareProfileBtn" class="profile-action-btn" style="display: none;" onclick="showToast('Share coming soon', 'info')">Share profile</button>
+              <button id="settingsBtn" class="icon-btn-small" style="display: none;" onclick="window.location.href='/settings.html'"><i class="fas fa-cog"></i></button>
+              <button class="icon-btn-small" onclick="showToast('Discover coming soon', 'info')"><i class="fas fa-user-plus"></i></button>
+            </div>
+            
+            <!-- Discover People Section -->
+            <div class="discover-people-header">
+              <h3>Discover people</h3>
+              <button class="see-all-btn">See all</button>
+            </div>
+            <div class="discover-list">
+              <!-- Hardcoded placeholders mimicking screenshot -->
+              <div class="discover-card">
+                <i class="fas fa-times discover-card-close"></i>
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=malik" alt="malik">
+                <div class="discover-card-name">malik</div>
+                <button class="discover-follow-btn">Follow</button>
+              </div>
+              <div class="discover-card">
+                <i class="fas fa-times discover-card-close"></i>
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=arman" alt="Arman">
+                <div class="discover-card-name">Arman ki dulha...</div>
+                <button class="discover-follow-btn">Follow</button>
+              </div>
+              <div class="discover-card">
+                <i class="fas fa-times discover-card-close"></i>
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=aahana" alt="Aahana">
+                <div class="discover-card-name">Aahana Kha...</div>
+                <button class="discover-follow-btn">Follow</button>
+              </div>
+            </div>
+            
+          </div>
+
+        <!-- Profile Tabs -->
+        <div class="profile-tabs">
+          <div class="profile-tab active"><i class="fas fa-th"></i></div>
+          <div class="profile-tab"><i class="fab fa-instagram"></i></div>
+          <div class="profile-tab"><i class="far fa-id-badge"></i></div>
+        </div>
+
+        <!-- Profile Grid -->
+        <div class="stagger-3">
+          <div class="profile-grid" id="profileGrid">
+            <!-- Injected via JS -->
+          </div>
+          
+          <div id="emptyPostsState" style="display: none; text-align: center; padding: 60px 20px;">
+            <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Create your first post</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 24px; font-weight: 500;">Share your point of view.</p>
+            <button class="profile-action-btn primary" style="width: auto; padding: 10px 24px; margin: 0 auto;" onclick="window.location.href='/post.html'">Create</button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div id="editModal" class="modal-overlay">
+    <div class="modal-box">
+      <h3 style="margin-bottom: var(--space-4);">Edit Profile</h3>
+      <form id="editProfileForm">
+        <div class="input-group">
+          <input type="text" id="editFullName" class="input-field show-placeholder" placeholder="Full Name" required>
+        </div>
+        <div class="input-group">
+          <textarea id="editBio" class="input-field show-placeholder" placeholder="Bio" style="min-height: 80px;"></textarea>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: var(--space-3);">
+          <button type="button" class="btn btn-ghost" onclick="closeEditModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveProfileBtn">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Users Modal (Followers/Following) -->
+  <div id="usersModal" class="modal-overlay">
+    <div class="modal-box" style="padding: 0; max-height: 80vh; display: flex; flex-direction: column;">
+      <div style="padding: var(--space-4); border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+        <h3 id="usersModalTitle">Users</h3>
+        <button onclick="closeUsersModal()" style="background: none; border: none; color: var(--text-secondary); cursor: pointer;"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="usersModalList" style="padding: var(--space-2) 0; overflow-y: auto;">
+        <!-- Injected -->
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>
+

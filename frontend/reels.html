@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reels - Loopline</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background-color: var(--bg-base);
+    }
+    .reels-wrapper {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      background: var(--bg-base);
+      scrollbar-width: none; /* Firefox */
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 40; /* Above main content background but below sidebar if needed */
+    }
+    
+    .reels-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .reel-container {
+      height: 100vh;
+      width: 100%;
+      scroll-snap-align: start;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--bg-base);
+    }
+    
+    .reel-video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      cursor: pointer;
+    }
+    
+    .reel-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      padding: var(--space-4);
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: calc(var(--space-4) + 60px); /* Space for bottom nav on mobile */
+      pointer-events: none;
+    }
+    
+    .reel-info {
+      flex: 1;
+      padding-right: var(--space-4);
+      pointer-events: auto;
+    }
+    
+    .reel-actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      align-items: center;
+      pointer-events: auto;
+      margin-bottom: var(--space-4);
+    }
+    
+    .reel-action-btn {
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      border: none;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 20px;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .reel-action-btn:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+    .reel-action-btn:active {
+      transform: scale(0.9);
+    }
+    
+    .reel-action-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .reel-action-wrapper span {
+      font-size: 13px;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    }
+    
+    .reel-action-btn.liked i {
+      color: var(--error);
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .remix-icon {
+      background: linear-gradient(135deg, #a334fa, #ff2c85, #ff8c37);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .reel-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px; /* slightly squared like YT */
+      border: 2px solid white;
+      object-fit: cover;
+      cursor: pointer;
+    }
+    
+    .top-controls {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .top-controls-left {
+      display: flex;
+      gap: 12px;
+      pointer-events: auto;
+    }
+
+    .top-controls-right {
+      pointer-events: auto;
+    }
+
+    .control-btn {
+      background: rgba(0,0,0,0.4);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .control-btn:hover {
+      background: rgba(0,0,0,0.6);
+    }
+
+    .play-icon {
+      position: absolute;
+      font-size: 80px;
+      color: rgba(255, 255, 255, 0.6);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+      z-index: 10;
+      transform: scale(0.8);
+    }
+
+    .play-icon.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .heart-animation {
+      position: absolute;
+      font-size: 100px;
+      color: var(--error);
+      pointer-events: none;
+      opacity: 0;
+      z-index: 20;
+      transform: scale(0);
+    }
+    @keyframes likeHeartAnim {
+      0% { transform: scale(0) rotate(-15deg); opacity: 0; }
+      15% { transform: scale(1.2) rotate(-15deg); opacity: 1; }
+      30% { transform: scale(1) rotate(-15deg); opacity: 1; }
+      70% { transform: scale(1) rotate(-15deg); opacity: 1; }
+      100% { transform: scale(1.5) rotate(-15deg); opacity: 0; }
+    }
+
+    .progress-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      z-index: 50;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--error); /* Red line */
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* Comments Modal Overlay */
+    .comments-modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .comments-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Comments Panel */
+    .comments-bottom-sheet {
+      position: fixed;
+      bottom: -100%;
+      left: 0;
+      right: 0;
+      max-width: 500px;
+      margin: 0 auto;
+      height: 70vh;
+      background: #0f0f0f;
+      border-radius: 16px 16px 0 0;
+      z-index: 101;
+      transition: bottom 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1), right 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
+    }
+    .comments-bottom-sheet.active {
+      bottom: 0;
+    }
+
+    .comments-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      color: white;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .comments-header h3 { margin: 0; font-size: 18px; font-weight: 700; display: flex; align-items: center; }
+    .comments-header .comment-count { font-size: 14px; font-weight: 400; color: #aaa; margin-left: 8px; }
+    
+    .header-actions { display: flex; gap: 16px; align-items: center; }
+    .close-comments-btn {
+      background: none; border: none; color: white; font-size: 20px; cursor: pointer;
+    }
+
+    .comments-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .comment-item {
+      display: flex;
+      gap: 16px;
+      color: white;
+    }
+    .comment-item img {
+      width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
+    }
+    .comment-content { flex: 1; }
+    .comment-user {
+      font-weight: 500; font-size: 13px; color: #f1f1f1; margin-bottom: 4px;
+    }
+    .comment-user span.time { color: #aaa; font-weight: 400; margin-left: 4px; }
+    .comment-text { font-size: 14px; line-height: 1.4; color: #fff; margin-bottom: 8px; }
+    .comment-actions {
+      display: flex; gap: 16px; align-items: center; color: #aaa; font-size: 12px; font-weight: 600;
+    }
+    .comment-actions i { font-size: 14px; cursor: pointer; transition: color 0.2s; }
+    .comment-actions i:hover { color: white; }
+    .comment-actions span.action-btn { cursor: pointer; transition: color 0.2s; }
+    .comment-actions span.action-btn:hover { color: white; }
+
+    .comments-input-area {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      background: #0f0f0f;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .comment-input-row {
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .comment-input-row img {
+      width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
+    }
+    .comment-input-wrapper { flex: 1; display: flex; flex-direction: column; }
+    .comment-input-wrapper input {
+      background: transparent; border: none; border-bottom: 1px solid #717171;
+      color: white; padding: 4px 0 8px 0; outline: none; font-size: 14px; transition: border-color 0.2s; width: 100%;
+    }
+    .comment-input-wrapper input:focus { border-bottom-color: white; }
+    .comment-submit-actions {
+      display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px;
+    }
+    .comment-btn {
+      background: rgba(255,255,255,0.1); color: #aaa; border: none; border-radius: 18px;
+      padding: 8px 16px; font-weight: 600; font-size: 13px; cursor: not-allowed; transition: all 0.2s;
+    }
+    .comment-btn.active {
+      background: #3ea6ff; color: #0f0f0f; cursor: pointer;
+    }
+    .cancel-btn {
+      background: transparent; color: white; border: none; border-radius: 18px;
+      padding: 8px 16px; font-weight: 600; font-size: 13px; cursor: pointer;
+    }
+    .cancel-btn:hover { background: rgba(255,255,255,0.1); }
+
+    /* Adjust sidebar on desktop to sit over the black reels bg */
+    @media (min-width: 768px) {
+      .reels-wrapper {
+        width: calc(100% - 220px);
+        left: 220px;
+      }
+      .reel-overlay {
+        padding-bottom: var(--space-4);
+      }
+      
+      .comments-bottom-sheet {
+        bottom: auto;
+        top: 20px;
+        right: -420px; /* Hidden offscreen right */
+        left: auto;
+        max-width: 400px;
+        width: 400px;
+        height: calc(100vh - 40px);
+        border-radius: 12px;
+        margin: 0;
+      }
+      .comments-bottom-sheet.active {
+        bottom: auto;
+        right: 20px; /* Slide in from right */
+      }
+      .comments-modal-overlay {
+        background: transparent; 
+      }
+    }
+  </style>
+<link rel="icon" href="/favicon_v2.svg" type="image/svg+xml">
+</head>
+<body class="page-enter">
+
+  <div class="app-container">
+    <div class="reels-wrapper" id="reelsContainer">
+      <div style="height: 100vh; display: flex; align-items: center; justify-content: center; color: white;">
+        <i class="fas fa-spinner fa-spin fa-3x"></i>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <!-- Comments Bottom Sheet / Side Panel -->
+  <div class="comments-modal-overlay" id="commentsOverlay" onclick="closeCommentsModal()"></div>
+  <div class="comments-bottom-sheet" id="commentsSheet">
+    <div class="comments-header">
+      <h3>Comments <span class="comment-count" id="headerCommentCount">0</span></h3>
+      <div class="header-actions">
+        <i class="fas fa-sort-amount-down" style="font-size: 16px; cursor: pointer; margin-right: 8px;"></i>
+        <button class="close-comments-btn" onclick="closeCommentsModal()"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+    
+    <div class="comments-list" id="commentsList">
+      <!-- Comments injected here -->
+      <div style="text-align:center; color:#888; margin-top: 20px;">Loading...</div>
+    </div>
+    
+    <form class="comments-input-area" id="commentForm" onsubmit="submitReelComment(event)">
+      <div class="comment-input-row">
+        <img id="currentUserAvatar" src="/img/default-avatar.png" alt="You" onerror="handleImageError(this)">
+        <div class="comment-input-wrapper">
+          <input type="text" id="commentInput" placeholder="Add a comment..." required autocomplete="off" oninput="toggleCommentButton(this)">
+          <div class="comment-submit-actions">
+            <button type="button" class="cancel-btn" onclick="clearCommentInput()">Cancel</button>
+            <button type="submit" class="comment-btn" id="submitCommentBtn" disabled>Comment</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script src="js/api.js?v=6"></script>
+  <script src="js/nav.js?v=6"></script>
+  <script src="js/reels_v4.js?v=6"></script>
+</body>
+</html>
+
+

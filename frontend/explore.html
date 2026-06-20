@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore - Loopline</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="icon" href="/favicon_v2.svg" type="image/svg+xml">
+</head>
+<body class="page-enter">
+
+  <div class="app-container">
+    
+    <main class="main-content">
+      <div class="content-wrapper">
+        
+        <!-- Search Bar -->
+        <div class="input-group stagger-1" style="margin-bottom: var(--space-6);">
+          <input type="text" id="searchInput" class="input-field show-placeholder" placeholder="Search users...">
+          <i class="fas fa-search" style="position: absolute; right: var(--space-4); top: 14px; color: var(--text-secondary);"></i>
+        </div>
+
+        <!-- Search Results (Hidden by default) -->
+        <div id="searchResults" style="display: none; margin-bottom: var(--space-6);">
+          <h3 style="margin-bottom: var(--space-3);">Search Results</h3>
+          <div id="searchResultsList" class="card" style="padding: 0; overflow: hidden;"></div>
+        </div>
+
+        <!-- Suggestions -->
+        <div class="stagger-2" style="margin-bottom: var(--space-6);">
+          <h3 style="margin-bottom: var(--space-3);">Suggested for you</h3>
+          <div class="card" style="padding: 0; overflow: hidden;" id="suggestionsList">
+            <!-- Injected via JS -->
+            <div style="padding: var(--space-4); text-align: center; color: var(--text-muted);">Loading suggestions...</div>
+          </div>
+        </div>
+
+        <!-- Explore Grid -->
+        <div class="stagger-3">
+          <h3 style="margin-bottom: var(--space-3);">Explore</h3>
+          <div class="masonry-grid" id="exploreGrid">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+      </div>
+    </main>
+    
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/explore.js"></script>
+</body>
+</html>
+
+

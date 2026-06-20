@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loopline - Connect the World</title>
+  
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    body {
+      overflow: hidden;
+      display: flex;
+      height: 100vh;
+    }
+    
+    .auth-split {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .auth-banner {
+      flex: 1;
+      background: linear-gradient(135deg, rgba(131, 58, 180, 0.85), rgba(225, 48, 108, 0.85), rgba(247, 119, 55, 0.85)), url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2000&auto=format&fit=crop') center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      padding: var(--space-8);
+    }
+    
+    .auth-banner h1 {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-3);
+      text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    
+    .auth-banner p {
+      font-size: var(--text-lg);
+      max-width: 400px;
+      opacity: 0.9;
+    }
+    
+    .auth-content {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-8);
+      background-color: var(--bg-base);
+    }
+    
+    .auth-header {
+      margin-bottom: var(--space-6);
+    }
+    
+    .auth-header h2 {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-2);
+    }
+    
+    .auth-header p {
+      color: var(--text-secondary);
+    }
+    
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .auth-switch {
+      margin-top: var(--space-5);
+      text-align: center;
+      color: var(--text-secondary);
+    }
+    
+    .auth-switch a {
+      font-weight: 500;
+      cursor: pointer;
+    }
+    
+    .password-strength {
+      height: 4px;
+      background-color: var(--bg-hover);
+      margin-top: -12px;
+      margin-bottom: var(--space-4);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      display: none;
+    }
+    
+    .password-strength-bar {
+      height: 100%;
+      width: 0%;
+      transition: all 0.3s ease;
+    }
+    
+    .strength-weak { background-color: var(--error); width: 33%; }
+    .strength-medium { background-color: #F59E0B; width: 66%; }
+    .strength-strong { background-color: var(--success); width: 100%; }
+
+    @media (max-width: 800px) {
+      .auth-banner {
+        display: none;
+      }
+      .auth-content {
+        max-width: 100%;
+        padding: var(--space-5);
+      }
+    }
+  </style>
+<link rel="icon" href="/favicon_v2.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <div class="auth-split">
+    
+    <div class="auth-banner">
+      <h1>Loopline</h1>
+      <p>Connect with friends, share what you're up to, or see what's new from others all over the world.</p>
+    </div>
+    
+    <div class="auth-content">
+      
+      <!-- Login Section -->
+      <div id="loginSection">
+        <div class="auth-header">
+          <h2>Welcome back</h2>
+          <p>Enter your details to access your account.</p>
+        </div>
+        
+        <form id="loginForm" class="auth-form" novalidate>
+          <div class="input-group">
+            <input type="email" id="loginEmail" class="input-field" placeholder=" " required>
+            <label class="input-label" for="loginEmail">Email Address</label>
+            <span class="input-error">Please enter a valid email address.</span>
+          </div>
+          
+          <div class="input-group">
+            <input type="password" id="loginPassword" class="input-field" placeholder=" " required>
+            <label class="input-label" for="loginPassword">Password</label>
+            <button type="button" class="password-toggle" tabindex="-1">
+              <i class="far fa-eye"></i>
+            </button>
+            <span class="input-error">Password is required.</span>
+          </div>
+          
+          <div style="text-align: right; margin-bottom: var(--space-4); margin-top: -10px;">
+            <a href="#" class="text-xs" style="color: var(--text-secondary);" onclick="toggleSection('forgotSection')">Forgot Password?</a>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-lg" id="loginBtn">
+            <span>Log In</span>
+          </button>
+        </form>
+        
+        <div class="auth-switch">
+          Don't have an account? <a onclick="toggleSection('signupSection')">Sign up</a>
+        </div>
+      </div>
+      
+      <!-- Signup Section -->
+      <div id="signupSection" style="display: none;">
+        <div class="auth-header">
+          <h2>Create Account</h2>
+          <p>Join the Loopline community today.</p>
+        </div>
+        
+        <form id="signupForm" class="auth-form" novalidate>
+          <div class="input-group">
+            <input type="text" id="signupUsername" class="input-field" placeholder=" " required minlength="3" maxlength="24">
+            <label class="input-label" for="signupUsername">Username</label>
+            <span class="input-error">Username must be 3-24 characters.</span>
+          </div>
+          
+          <div class="input-group">
+            <input type="email" id="signupEmail" class="input-field" placeholder=" " required>
+            <label class="input-label" for="signupEmail">Email Address</label>
+            <span class="input-error">Please enter a valid email address.</span>
+          </div>
+          
+          <div class="input-group">
+            <input type="password" id="signupPassword" class="input-field" placeholder=" " required>
+            <label class="input-label" for="signupPassword">Password</label>
+            <button type="button" class="password-toggle" tabindex="-1">
+              <i class="far fa-eye"></i>
+            </button>
+            <span class="input-error">Password is required.</span>
+          </div>
+          
+          <div class="password-strength" id="pwdStrengthContainer">
+            <div class="password-strength-bar" id="pwdStrengthBar"></div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-lg" id="signupBtn">
+            <span>Sign Up</span>
+          </button>
+        </form>
+        
+        <div class="auth-switch">
+          Already have an account? <a onclick="toggleSection('loginSection')">Log in</a>
+        </div>
+      </div>
+      
+      <!-- Forgot Password Section -->
+      <div id="forgotSection" style="display: none;">
+        <div class="auth-header">
+          <h2>Reset Password</h2>
+          <p>Enter your email to receive an OTP.</p>
+        </div>
+        
+        <form id="forgotForm" class="auth-form" novalidate>
+          <div class="input-group">
+            <input type="email" id="forgotEmail" class="input-field" placeholder=" " required>
+            <label class="input-label" for="forgotEmail">Email Address</label>
+            <span class="input-error">Please enter a valid email.</span>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-lg" id="forgotBtn">
+            <span>Send OTP</span>
+          </button>
+        </form>
+        
+        <div class="auth-switch">
+          Remember your password? <a onclick="toggleSection('loginSection')">Log in</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/api.js?v=6"></script>
+  <script src="js/auth.js?v=6"></script>
+  <script>
+    // Initialize Auth UI Logic
+    initAuthUI();
+  </script>
+</body>
+</html>
+

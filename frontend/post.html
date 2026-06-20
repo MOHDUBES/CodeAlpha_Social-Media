@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post - Loopline</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .split-post {
+      display: flex;
+      height: calc(100vh - var(--space-8));
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .split-media {
+      flex: 1.5;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .split-media img, .split-media video {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .split-sidebar {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid var(--border-subtle);
+      min-width: 320px;
+      max-width: 450px;
+    }
+    .split-header {
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .split-comments {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .split-footer {
+      padding: var(--space-4);
+      border-top: 1px solid var(--border-subtle);
+    }
+    
+    .comment-item {
+      display: flex;
+      gap: var(--space-3);
+    }
+    .comment-content {
+      flex: 1;
+      font-size: var(--text-sm);
+    }
+    
+    @media (max-width: 900px) {
+      .split-post {
+        flex-direction: column;
+        height: auto;
+      }
+      .split-sidebar {
+        min-width: 100%;
+        max-width: 100%;
+        border-left: none;
+        border-top: 1px solid var(--border-subtle);
+      }
+      .split-media {
+        min-height: 400px;
+      }
+    }
+  </style>
+<link rel="icon" href="/favicon_v2.svg" type="image/svg+xml">
+</head>
+<body class="page-enter">
+
+  <div class="app-container">
+    <main class="main-content">
+      <div class="content-wrapper">
+        
+        <div style="margin-bottom: var(--space-4);">
+          <a href="javascript:history.back()" style="color: var(--text-secondary);"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+        
+        <div id="postContainer">
+          <!-- Skeletons -->
+          <div class="card skeleton stagger-1" style="height: 600px;"></div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/post.js"></script>
+</body>
+</html>
+
